@@ -1,0 +1,142 @@
+<h1><%= @qr_code.name %></h1>
+
+<!-- Action links -->
+<p>
+  <%= link_to "← Back to list", admin_qr_codes_path %> |
+  <%= link_to "✏️ Edit", edit_admin_qr_code_path(@qr_code) %> |
+  <%= link_to "🗑 Delete", admin_qr_code_path(@qr_code),
+      data: { turbo_method: :delete, turbo_confirm: "Delete #{@qr_code.name}? This cannot be undone." },
+      style: "color: red;" %>
+</p>
+
+<hr>
+
+<!-- QR Code Details -->
+<h2>Details</h2>
+<table border="1" cellpadding="10" style="border-collapse: collapse;">
+  <tr>
+    <td><strong>Name</strong></td>
+    <td><%= @qr_code.name %></td>
+  </tr>
+  <tr>
+    <td><strong>Slug</strong></td>
+    <td><code><%= @qr_code.slug %></code></td>
+  </tr>
+  <tr>
+    <td><strong>Destination URL</strong></td>
+    <td><%= link_to @qr_code.destination_url, @qr_code.destination_url, target: "_blank" %></td>
+  </tr>
+  <tr>
+    <td><strong>Status</strong></td>
+    <td style="color: <%= @qr_code.active? ? 'green' : 'red' %>; font-weight: bold;">
+      <%= @qr_code.active? ? "✅ Active" : "❌ Inactive" %>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Public QR URL</strong></td>
+    <td>
+      <!-- This is the URL encoded into the QR code image -->
+      <code id="public-url"><%= qr_redirect_url(@qr_code.slug) %></code>
+      &nbsp;
+      <!-- Copy button uses JavaScript to copy the URL to the clipboard -->
+      <button onclick="navigator.clipboard.writeText(document.getElementById('public-url').innerText); this.innerText='✅ Copied!';"
+              style="padding: 4px 10px; cursor: pointer;">
+        📋 Copy URL
+      </button>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Total Scans</strong></td>
+    <td><strong style="font-size: 20px;"><%= @qr_code.qr_scans.count %></strong></td>
+  </tr>
+  <tr>
+    <td><strong>Created</strong></td>
+    <td><%= @qr_code.created_at.strftime("%d %b %Y at %H:%M") %></td>
+  </tr>
+</table>
+
+<hr>
+
+<!-- QR Code Image Section -->
+<h2>QR Code Image</h2>
+<p>Scan this with your phone to test it. It redirects to the destination URL above.</p>
+
+<!-- Display the PNG image using Base64 encoding embedded directly in the HTML -->
+<!-- data:image/png;base64 tells the browser this is a PNG image encoded as text -->
+<div style="border: 1px solid #ccc; padding: 10px; display: inline-block; background: white;">
+  <img src="data:image/png;base64,<%= @qr_code.qr_image_png_base64(request.base_url) %>"
+       alt="QR Code for <%= @qr_code.name %>"
+       style="width: 200px; height: 200px;">
+</div>
+
+<p>
+  <!-- Download button — calls the download_qr action in the controller -->
+  <%= link_to "⬇️ Download QR Code (PNG)", download_qr_admin_qr_code_path(@qr_code),
+      style: "display: inline-block; margin-top: 10px; padding: 8px 16px; background: #388E3C; color: white; border-radius: 4px; text-decoration: none;" %>
+</p>
+
+<hr>
+
+<!-- Scan Analytics by Day -->
+<h2>Scans Per Day — Last 30 Days</h2>
+<% if @scans_by_day.any? %>
+  <% max_scans = @scans_by_day.values.max %>
+  <table border="1" cellpadding="8" style="border-collapse: collapse;">
+    <tr style="background: #f0f0f0;">
+      <th>Date</th>
+      <th>Scans</th>
+      <th>Bar Chart</th>
+    </tr>
+    <% @scans_by_day.each do |date, count| %>
+      <tr>
+        <td><%= date %></td>
+        <td><strong><%= count %></strong></td>
+        <td>
+          <!-- Visual bar — width is proportional to the highest day's count -->
+          <div style="background: #1976D2; height: 18px; width: <%= (count.to_f / max_scans * 300).to_i %>px; border-radius: 2px;"></div>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p style="color: #666;">No scans in the last 30 days yet.</p>
+<% end %>
+
+<hr>
+
+<!-- Recent Scans Table -->
+<h2>Scan History (<%= @qr_code.qr_scans.count %> total)</h2>
+<% if @scans.any? %>
+  <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+    <tr style="background: #f0f0f0;">
+      <th>Date & Time</th>
+      <th>IP Address</th>
+      <th>Browser / Device</th>
+      <th>Referrer</th>
+    </tr>
+    <% @scans.each do |scan| %>
+      <tr>
+        <td><%= scan.scanned_at.strftime("%d %b %Y at %H:%M:%S") %></td>
+        <td><%= scan.ip_address %></td>
+        <td><%= truncate(scan.user_agent.to_s, length: 60) %></td>
+        <td><%= scan.referrer.present? ? truncate(scan.referrer, length: 40) : "Direct visit" %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <!-- Pagination — only shows if there are more than 20 scans -->
+  <% if @pagy.pages > 1 %>
+    <div style="margin-top: 15px;">
+      <%== pagy_nav(@pagy) %>
+    </div>
+  <% end %>
+
+<% else %>
+  <p style="color: #666;">
+    No scans yet. Visit
+    <a href="<%= qr_redirect_url(@qr_code.slug) %>" target="_blank">
+      <%= qr_redirect_url(@qr_code.slug) %>
+    </a>
+    to record the first scan!
+  </p>
+<% end %>

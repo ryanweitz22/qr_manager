@@ -1,30 +1,50 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Qr Manager" %></title>
+    <title>QR Manager</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+  <body style="font-family: Arial, sans-serif; max-width: 1100px; margin: 0 auto; padding: 20px;">
+
+    <!-- Navigation bar shown at the top of every page -->
+    <nav style="border-bottom: 2px solid #333; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+      <strong style="font-size: 22px;">📱 QR Manager</strong>
+
+      <!-- Only show these links when an admin is logged in -->
+      <% if admin_user_signed_in? %>
+        <div>
+          <%= link_to "📋 QR Codes", admin_qr_codes_path, style: "margin-right: 15px;" %>
+          <!-- Logout requires DELETE method — data: turbo_method handles this -->
+          <%= link_to "🚪 Logout", destroy_admin_user_session_path,
+              data: { turbo_method: :delete },
+              style: "margin-right: 15px; color: red;" %>
+          <small style="color: #666;">👤 <%= current_admin_user.email %></small>
+        </div>
+      <% end %>
+    </nav>
+
+    <!-- Flash messages — shown after actions like create, update, delete -->
+    <!-- notice = green success messages -->
+    <% if notice %>
+      <p style="color: green; background: #e8f5e9; padding: 10px; border-radius: 4px; margin-bottom: 15px;">
+        ✅ <%= notice %>
+      </p>
+    <% end %>
+
+    <!-- alert = red error messages like wrong password -->
+    <% if alert %>
+      <p style="color: red; background: #ffebee; padding: 10px; border-radius: 4px; margin-bottom: 15px;">
+        ❌ <%= alert %>
+      </p>
+    <% end %>
+
+    <!-- Each page's unique content gets inserted here -->
     <%= yield %>
+
   </body>
 </html>

@@ -1,0 +1,5 @@
+<h1>Edit: <%= @qr_code.name %></h1>
+<p><%= link_to "← Back to details", admin_qr_code_path(@qr_code) %></p>
+<hr>
+<!-- Render the same form partial — it works for both new and edit -->
+<%= render "form" %>

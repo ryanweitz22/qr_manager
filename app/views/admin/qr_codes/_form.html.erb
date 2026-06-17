@@ -1,0 +1,61 @@
+<!-- form_with creates the HTML form and submits to the correct URL automatically -->
+<!-- model: [:admin, @qr_code] tells Rails this form is in the admin namespace -->
+<%= form_with model: [:admin, @qr_code] do |f| %>
+
+  <!-- Show validation errors if the form was submitted with bad data -->
+  <% if @qr_code.errors.any? %>
+    <div style="color: red; background: #ffebee; padding: 12px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #f44336;">
+      <strong>Please fix these errors before saving:</strong>
+      <ul style="margin: 8px 0 0 20px;">
+        <% @qr_code.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Name field -->
+  <p>
+    <%= f.label :name, "QR Code Name *" %><br>
+    <%= f.text_field :name,
+        placeholder: "e.g. Business Card QR",
+        style: "width: 400px; padding: 7px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px;" %>
+  </p>
+
+  <!-- Slug field — auto generated from name but can be overridden -->
+  <p>
+    <%= f.label :slug, "Slug (URL identifier) *" %><br>
+    <%= f.text_field :slug,
+        placeholder: "e.g. business-card-qr",
+        style: "width: 400px; padding: 7px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px;" %><br>
+    <small style="color: #666;">
+      This becomes the public URL: /q/your-slug-here<br>
+      Leave blank to auto-generate from the name above.
+    </small>
+  </p>
+
+  <!-- Destination URL -->
+  <p>
+    <%= f.label :destination_url, "Destination URL *" %><br>
+    <%= f.url_field :destination_url,
+        placeholder: "https://example.com",
+        style: "width: 400px; padding: 7px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px;" %><br>
+    <small style="color: #666;">
+      Where the QR code redirects to. You can change this at any time.
+    </small>
+  </p>
+
+  <!-- Active toggle -->
+  <p>
+    <%= f.check_box :active, style: "margin-right: 6px;" %>
+    <%= f.label :active, "Active — QR code will redirect when scanned" %>
+  </p>
+
+  <!-- Submit button -->
+  <p>
+    <%= f.submit style: "background: #1976D2; color: white; padding: 10px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 15px;" %>
+    &nbsp;
+    <%= link_to "Cancel", admin_qr_codes_path, style: "color: #666;" %>
+  </p>
+
+<% end %>
