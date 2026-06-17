@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :qr_scan do
-    qr_code { nil }
-    ip_address { "MyString" }
-    user_agent { "MyText" }
-    referrer { "MyText" }
-    scanned_at { "2026-06-17 08:19:18" }
+    association :qr_code
+    ip_address { "127.0.0.1" }
+    user_agent { "Mozilla/5.0 (Test Browser)" }
+    referrer { "https://www.referrer.com" }
+    scanned_at { Time.current }
   end
 end
