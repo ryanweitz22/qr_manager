@@ -23,10 +23,8 @@ class Admin::QrCodesController < Admin::BaseController
   # SHOW — display one QR code with full details and scan history
   # URL: GET /admin/qr_codes/:id
   def show
-    # Get scans paginated — 20 per page using the pagy gem
-    @pagy, @scans = pagy(@qr_code.qr_scans.order(scanned_at: :desc), items: 20)
-    # Get scan counts per day for the analytics bar chart
-    @scans_by_day = @qr_code.scans_by_day
+  @scans = @qr_code.qr_scans.order(scanned_at: :desc).limit(50)
+  @scans_by_day = @qr_code.scans_by_day
   end
 
   # NEW — show the blank form to create a new QR code
