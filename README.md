@@ -79,3 +79,17 @@ Deployed on Railway with a linked PostgreSQL service. Auto-deploys on every push
 ## Assumptions and Notes
 
 The specification listed Ruby 4.0.2. I installed Ruby 4.0.2 locally using rbenv, updated the Gemfile, ran bundle install, and confirmed the application runs perfectly on Ruby 4.0.2 on my local machine. The only reason 3.3.4 is used in production is that Railway's build servers — in fact no free deployment platform — currently supports Ruby 4.0.2 as it was only released in March 2026. The Gemfile has been set to Ruby 3.3.4 purely for deployment compatibility. If you wish to run this application locally on Ruby 4.0.2, simply install Ruby 4.0.2 via rbenv and run bundle install — the application is fully compatible and works without any code changes.
+
+## Running Locally on Ruby 4.0.2
+
+This application was built on Ruby 4.0.2 as specified. It was changed to Ruby 3.3.4 purely for deployment compatibility as no free hosting platform currently supports Ruby 4.0.2. To run the application locally on Ruby 4.0.2, open your Ubuntu terminal, navigate to the project folder and run the following commands:
+
+```bash
+rbenv install 4.0.2
+rbenv local 4.0.2
+sed -i 's/ruby "3.3.4"/ruby "4.0.2"/' Gemfile
+bundle install
+rails server
+```
+
+Then visit http://localhost:3000 in your browser and log in with admin@example.com / password123
