@@ -26,7 +26,7 @@ A web application that lets you create and manage dynamic QR codes. Unlike stati
 
 | Technology | Purpose |
 |-----------|---------|
-| Ruby 3.3.4 | Programming language |
+| Ruby 4.0.2 / 3.3.4 | Programming language |
 | Ruby on Rails 8 | Web framework |
 | PostgreSQL | Database |
 | Devise | Admin authentication |
