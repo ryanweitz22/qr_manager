@@ -37,7 +37,7 @@ A web application that lets you create and manage dynamic QR codes. Unlike stati
 ## Local Setup
 
 ### Prerequisites
-- Ruby 4.0.2 / 3.3.4
+- Ruby 3.3.4
 - PostgreSQL
 - Node.js and Yarn
 
