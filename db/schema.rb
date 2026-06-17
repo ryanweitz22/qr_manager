@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_17_061536) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_17_061918) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,4 +25,26 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_17_061536) do
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
+
+  create_table "qr_codes", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.string "destination_url"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "qr_scans", force: :cascade do |t|
+    t.bigint "qr_code_id", null: false
+    t.string "ip_address"
+    t.text "user_agent"
+    t.text "referrer"
+    t.datetime "scanned_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["qr_code_id"], name: "index_qr_scans_on_qr_code_id"
+  end
+
+  add_foreign_key "qr_scans", "qr_codes"
 end

@@ -5,6 +5,7 @@ gem "rails", "~> 8.0.0"
 gem "devise"
 gem "rqrcode"
 gem "pagy"
+gem "chunky_png"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use postgresql as the database for Active Record

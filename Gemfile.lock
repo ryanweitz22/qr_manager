@@ -424,6 +424,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   capybara
+  chunky_png
   debug
   devise
   factory_bot_rails
