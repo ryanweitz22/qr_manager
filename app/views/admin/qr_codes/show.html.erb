@@ -118,7 +118,7 @@
       <tr>
         <td><%= scan.scanned_at.strftime("%d %b %Y at %H:%M:%S") %></td>
         <td><%= scan.ip_address %></td>
-        <td><%= truncate(scan.user_agent.to_s, length: 60) %></td>
+        <td><%= begin; ua = UserAgent.parse(scan.user_agent.to_s); b = ua.browser.to_s; o = ua.os.to_s; [b, o].reject(&:empty?).join(" on "); rescue; scan.user_agent.to_s.split("(").first.strip; end %></td>
         <td><%= scan.referrer.present? ? truncate(scan.referrer, length: 40) : "Direct visit" %></td>
       </tr>
     <% end %>
