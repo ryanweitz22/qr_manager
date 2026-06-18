@@ -1,12 +1,13 @@
 <h1>QR Codes</h1>
 
-<!-- Button to create a new QR code -->
 <p>
   <%= link_to "➕ Create New QR Code", new_admin_qr_code_path,
       style: "background: #1976D2; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;" %>
+  &nbsp;
+  <%= link_to "🗄 View Archived QR Codes", archived_admin_qr_codes_path,
+      style: "background: #666; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;" %>
 </p>
 
-<!-- Search form — uses GET so the search term shows in the URL -->
 <form method="get" action="/admin/qr_codes" style="margin: 15px 0;">
   <input type="text" name="q" value="<%= params[:q] %>"
          placeholder="Search QR codes by name..."
@@ -14,13 +15,11 @@
   <button type="submit" style="padding: 7px 14px; background: #555; color: white; border: none; border-radius: 4px; cursor: pointer;">
     Search
   </button>
-  <!-- Show a clear button only when a search is active -->
   <% if params[:q].present? %>
     <%= link_to "✖ Clear", admin_qr_codes_path, style: "margin-left: 8px; color: red;" %>
   <% end %>
 </form>
 
-<!-- Table showing all QR codes -->
 <table border="1" cellpadding="10" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
   <thead>
     <tr style="background: #f0f0f0; text-align: left;">
@@ -34,12 +33,10 @@
     </tr>
   </thead>
   <tbody>
-    <!-- Loop through each QR code and display a row -->
     <% @qr_codes.each do |qr| %>
       <tr>
         <td><strong><%= qr.name %></strong></td>
         <td><code style="font-size: 12px;">/q/<%= qr.slug %></code></td>
-        <!-- truncate shortens long URLs so the table stays neat -->
         <td><%= truncate(qr.destination_url, length: 40) %></td>
         <td style="color: <%= qr.active? ? 'green' : 'red' %>; font-weight: bold;">
           <%= qr.active? ? "✅ Yes" : "❌ No" %>
@@ -49,6 +46,9 @@
         <td>
           <%= link_to "👁 View", admin_qr_code_path(qr) %> |
           <%= link_to "✏️ Edit", edit_admin_qr_code_path(qr) %> |
+          <%= button_to "🗄 Archive", archive_admin_qr_code_path(qr), method: :patch,
+              data: { confirm: "Archive #{qr.name}? It will be hidden from the main list." },
+              style: "background: none; border: none; color: #FF8C00; cursor: pointer; padding: 0; font-size: 14px;" %> |
           <%= link_to "🗑 Delete", admin_qr_code_path(qr),
               data: { turbo_method: :delete, turbo_confirm: "Delete #{qr.name}? This cannot be undone." },
               style: "color: red;" %>
@@ -58,7 +58,6 @@
   </tbody>
 </table>
 
-<!-- Show this message if there are no QR codes yet -->
 <% if @qr_codes.empty? %>
   <p style="color: #666; margin-top: 20px; font-size: 16px;">
     No QR codes found.

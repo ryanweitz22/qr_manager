@@ -1,0 +1,38 @@
+<h1>Archived QR Codes</h1>
+
+<p><%= link_to "← Back to Active QR Codes", admin_qr_codes_path %></p>
+
+<hr>
+
+<% if @qr_codes.empty? %>
+  <p>No archived QR codes.</p>
+<% else %>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Slug</th>
+        <th>Destination URL</th>
+        <th>Total Scans</th>
+        <th>Archived</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @qr_codes.each do |qr| %>
+        <tr>
+          <td><%= qr.name %></td>
+          <td><%= qr.slug %></td>
+          <td><%= qr.destination_url %></td>
+          <td><%= qr.qr_scans.count %></td>
+          <td><%= qr.created_at.strftime("%d %b %Y") %></td>
+          <td>
+            <%= link_to "👁 View", admin_qr_code_path(qr) %> |
+            <%= button_to "♻️ Restore", unarchive_admin_qr_code_path(qr), method: :patch, data: { confirm: "Restore this QR code?" } %> |
+            <%= button_to "🗑 Delete", admin_qr_code_path(qr), method: :delete, data: { confirm: "Permanently delete #{qr.name}? This cannot be undone." } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
