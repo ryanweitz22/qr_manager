@@ -118,7 +118,7 @@
       <tr>
         <td><%= scan.scanned_at.strftime("%d %b %Y at %H:%M:%S") %></td>
         <td><%= scan.ip_address %></td>
-        <td><%= begin; ua = UserAgent.parse(scan.user_agent.to_s); b = ua.browser.to_s; o = ua.os.to_s; [b, o].reject(&:empty?).join(" on "); rescue; scan.user_agent.to_s.split("(").first.strip; end %></td>
+        <td><%= scan.user_agent.to_s.include?("iPhone") || scan.user_agent.to_s.include?("iPad") ? "Mobile Safari — iOS" : scan.user_agent.to_s.include?("Android") ? "Chrome — Android" : scan.user_agent.to_s.match(/Chrome\/([\d]+)/) ? "Chrome #{$1}" : scan.user_agent.to_s.match(/Firefox\/([\d]+)/) ? "Firefox #{$1}" : "Unknown" %></td>
         <td><%= scan.referrer.present? ? truncate(scan.referrer, length: 40) : "Direct visit" %></td>
       </tr>
     <% end %>
