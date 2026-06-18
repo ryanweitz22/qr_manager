@@ -11,22 +11,16 @@
 
   <body style="font-family: Arial, sans-serif; max-width: 1100px; margin: 0 auto; padding: 20px;">
 
-    <!-- Navigation bar shown at the top of every page -->
-    <nav style="border-bottom: 2px solid #333; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-      <strong style="font-size: 22px;">📱 QR Manager</strong>
-
-      <!-- Only show these links when an admin is logged in -->
-      <% if admin_user_signed_in? %>
-        <div>
-          <%= link_to "📋 QR Codes", admin_qr_codes_path, style: "margin-right: 15px;" %>
-          <!-- Logout requires DELETE method — data: turbo_method handles this -->
-          <%= link_to "🚪 Logout", destroy_admin_user_session_path,
-              data: { turbo_method: :delete },
-              style: "margin-right: 15px; color: red;" %>
-          <small style="color: #666;">👤 <%= current_admin_user.email %></small>
-        </div>
-      <% end %>
-    </nav>
+  <nav style="border-bottom: 2px solid #e0e0e0; padding: 12px 20px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; background: white;">
+    <strong style="font-size: 20px; color: #222;">📱 QR Manager</strong>
+    <% if admin_user_signed_in? %>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <%= link_to "QR Codes", admin_qr_codes_path, style: "display:inline-block; padding: 6px 14px; background:#1976D2; color:white; border-radius:4px; text-decoration:none; font-size:14px;" %>
+        <%= link_to "Logout", destroy_admin_user_session_path, data: { turbo_method: :delete }, style: "display:inline-block; padding: 6px 14px; background:#D32F2F; color:white; border-radius:4px; text-decoration:none; font-size:14px;" %>
+        <small style="color: #666; font-size:13px;">👤 <%= current_admin_user.email %></small>
+      </div>
+    <% end %>
+  </nav>
 
     <!-- Flash messages — shown after actions like create, update, delete -->
     <!-- notice = green success messages -->

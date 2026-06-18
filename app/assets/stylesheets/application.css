@@ -8,3 +8,33 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+/* ===== GLOBAL STYLES ===== */
+* {
+  font-family: system-ui, -apple-system, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  font-size: 16px;
+  color: #222;
+  background: #f9f9f9;
+}
+
+h1 { font-size: 28px; font-weight: 700; margin-bottom: 10px; }
+h2 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+p, td, th, label { font-size: 15px; }
+code { font-size: 13px; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 10px 12px; text-align: left; }
+th { background: #f0f0f0; font-weight: 600; }
+
+@media (max-width: 768px) {
+  body { padding: 12px; }
+  h1 { font-size: 22px; }
+  h2 { font-size: 17px; }
+  table { font-size: 13px; }
+  th, td { padding: 7px 8px; }
+}

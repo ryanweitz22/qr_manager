@@ -15,47 +15,35 @@
   <% end %>
 
   <!-- Name field -->
-  <p>
-    <%= f.label :name, "QR Code Name *" %><br>
-    <%= f.text_field :name,
-        placeholder: "e.g. Business Card QR",
-        style: "width: 400px; padding: 7px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px;" %>
-  </p>
+  <div style="margin-bottom: 16px;">
+    <%= f.label :name, "QR Code Name *", style: "display:block; font-weight:600; margin-bottom:6px;" %>
+    <%= f.text_field :name, placeholder: "e.g. Business Card QR", style: "width: 100%; max-width: 500px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size:15px;" %>
+  </div>
 
   <!-- Slug field — auto generated from name but can be overridden -->
-  <p>
-    <%= f.label :slug, "Slug (URL identifier) *" %><br>
-    <%= f.text_field :slug,
-        placeholder: "e.g. business-card-qr",
-        style: "width: 400px; padding: 7px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px;" %><br>
-    <small style="color: #666;">
-      This becomes the public URL: /q/your-slug-here<br>
-      Leave blank to auto-generate from the name above.
-    </small>
-  </p>
+  <div style="margin-bottom: 16px;">
+    <%= f.label :slug, "Slug (URL identifier) *", style: "display:block; font-weight:600; margin-bottom:6px;" %>
+    <%= f.text_field :slug, placeholder: "e.g. business-card-qr", style: "width: 100%; max-width: 500px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size:15px;" %>
+    <small style="color: #666; display:block; margin-top:4px;">This becomes the public URL: /q/your-slug-here<br>Leave blank to auto-generate from the name above.</small>
+  </div>
 
   <!-- Destination URL -->
-  <p>
-    <%= f.label :destination_url, "Destination URL *" %><br>
-    <%= f.url_field :destination_url,
-        placeholder: "https://example.com",
-        style: "width: 400px; padding: 7px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px;" %><br>
-    <small style="color: #666;">
-      Where the QR code redirects to. You can change this at any time.
-    </small>
-  </p>
+  <div style="margin-bottom: 16px;">
+    <%= f.label :destination_url, "Destination URL *", style: "display:block; font-weight:600; margin-bottom:6px;" %>
+    <%= f.url_field :destination_url, placeholder: "https://example.com", style: "width: 100%; max-width: 500px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size:15px;" %>
+    <small style="color: #666; display:block; margin-top:4px;">Where the QR code redirects to. You can change this at any time.</small>
+  </div>
 
   <!-- Active toggle -->
-  <p>
+  <div style="margin-bottom: 20px;">
     <%= f.check_box :active, style: "margin-right: 6px;" %>
     <%= f.label :active, "Active — QR code will redirect when scanned" %>
-  </p>
+  </div>
 
   <!-- Submit button -->
-  <p>
+  <div>
     <%= f.submit style: "background: #1976D2; color: white; padding: 10px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 15px;" %>
-    &nbsp;
-    <%= link_to "Cancel", admin_qr_codes_path, style: "color: #666;" %>
-  </p>
+    <%= link_to "Cancel", admin_qr_codes_path, style: "display:inline-block; padding: 10px 20px; background:#eee; color:#333; border-radius:4px; text-decoration:none; font-size:15px; margin-left:8px;" %>
+  </div>
 
 <% end %>

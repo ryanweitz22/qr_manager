@@ -1,5 +1,11 @@
 <h1>Edit: <%= @qr_code.name %></h1>
-<p><%= link_to "← Back to details", admin_qr_code_path(@qr_code) %></p>
+
+<p>
+  <%= link_to "← Back to details", admin_qr_code_path(@qr_code), style: 
+  "display:inline-block; padding: 6px 14px; background:#eee; color:#333; 
+  border-radius:4px; text-decoration:none; font-size:14px;" %>
+</p>
+
 <hr>
-<!-- Render the same form partial — it works for both new and edit -->
+
 <%= render "form" %>

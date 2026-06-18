@@ -1,12 +1,10 @@
 <h1><%= @qr_code.name %></h1>
 
 <!-- Action links -->
-<p>
-  <%= link_to "← Back to list", admin_qr_codes_path %> |
-  <%= link_to "✏️ Edit", edit_admin_qr_code_path(@qr_code) %> |
-  <%= link_to "🗑 Delete", admin_qr_code_path(@qr_code),
-      data: { turbo_method: :delete, turbo_confirm: "Delete #{@qr_code.name}? This cannot be undone." },
-      style: "color: red;" %>
+<p style="margin-bottom: 20px;">
+  <%= link_to "← Back to list", admin_qr_codes_path, style: "display:inline-block; padding: 6px 14px; background:#eee; color:#333; border-radius:4px; text-decoration:none; font-size:14px; margin:2px;" %>
+  <%= link_to "Edit", edit_admin_qr_code_path(@qr_code), style: "display:inline-block; padding: 6px 14px; background:#FF8C00; color:white; border-radius:4px; text-decoration:none; font-size:14px; margin:2px;" %>
+  <%= link_to "Delete", admin_qr_code_path(@qr_code), data: { turbo_method: :delete, turbo_confirm: "Delete #{@qr_code.name}? This cannot be undone." }, style: "display:inline-block; padding: 6px 14px; background:#D32F2F; color:white; border-radius:4px; text-decoration:none; font-size:14px; margin:2px;" %>
 </p>
 
 <hr>
