@@ -1,17 +1,16 @@
 /*
  * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
+ * With Propshaft, assets are served efficiently without preprocessing steps.
  */
+
 /* ===== GLOBAL STYLES ===== */
 * {
   font-family: system-ui, -apple-system, sans-serif;
   box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -25,16 +24,78 @@ body {
 h1 { font-size: 28px; font-weight: 700; margin-bottom: 10px; }
 h2 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
 p, td, th, label { font-size: 15px; }
-code { font-size: 13px; }
+code { font-size: 13px; word-break: break-all; }
 
-table { width: 100%; border-collapse: collapse; }
-th, td { padding: 10px 12px; text-align: left; }
+/* TABLE WRAPPER — allows horizontal scroll on small screens instead of overflow */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 10px 12px;
+  text-align: left;
+}
 th { background: #f0f0f0; font-weight: 600; }
 
+/* Wrap every table in a scrollable container automatically */
+table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+table thead, table tbody {
+  display: table;
+  width: 100%;
+}
+
+/* BUTTONS — allow wrapping instead of overflowing */
+a, button, input[type="submit"] {
+  word-break: break-word;
+}
+
+/* ===== TABLET — 769px to 1024px ===== */
+@media (max-width: 1024px) {
+  body { padding: 16px; }
+  h1 { font-size: 25px; }
+  h2 { font-size: 18px; }
+}
+
+/* ===== LARGE PHONE / SMALL TABLET — up to 768px ===== */
 @media (max-width: 768px) {
   body { padding: 12px; }
   h1 { font-size: 22px; }
   h2 { font-size: 17px; }
   table { font-size: 13px; }
   th, td { padding: 7px 8px; }
+
+  /* Nav bar stacks vertically and wraps on small screens */
+  nav {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  nav > div {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-start !important;
+  }
+}
+
+/* ===== SMALL PHONE — up to 480px ===== */
+@media (max-width: 480px) {
+  body { padding: 8px; font-size: 14px; }
+  h1 { font-size: 19px; }
+  h2 { font-size: 15px; }
+  table { font-size: 12px; }
+  th, td { padding: 5px 6px; }
+
+  /* Form inputs and buttons go full width on tiny screens */
+  input[type="text"], input[type="email"], input[type="password"], input[type="url"] {
+    max-width: 100% !important;
+  }
+  a[style*="display:inline-block"], button[style*="display:inline-block"] {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 6px !important;
+    width: 100%;
+  }
 }

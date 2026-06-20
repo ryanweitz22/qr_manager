@@ -12,14 +12,21 @@ A web application that lets you create and manage dynamic QR codes. Unlike stati
 
 **Test a redirect:** https://qrmanager-production.up.railway.app/q/sample-qr
 
+The live URL above will always work for anyone, on any device, anywhere in the world — no setup required. This is the version to use if you simply want to see and use the working application.
+
 ## Features
 
 - Create, edit, and delete QR codes via admin panel
 - Dynamic redirects — change destination URL anytime without reprinting
 - QR code image generation and PNG download
 - Scan tracking — records IP address, user agent, referrer, and timestamp for every scan
+- Browser/device parsing — scan history shows readable browser and device names instead of raw user agent strings
 - Search QR codes by name
 - Activate/deactivate QR codes
+- Archive/restore QR codes — soft delete with a dedicated archive view, fully restorable
+- Basic scan analytics by day (bar chart on detail page)
+- Mobile responsive UI — system-ui font, consistent button styling, works on phones/tablets/desktop
+- Dockerized — runs locally with either Ruby 3.3.4 or Ruby 4.0.2
 - 404 handling for invalid or inactive slugs
 
 ## Tech Stack
@@ -31,13 +38,57 @@ A web application that lets you create and manage dynamic QR codes. Unlike stati
 | PostgreSQL | Database |
 | Devise | Admin authentication |
 | rqrcode | QR code image generation |
+| useragent | Browser/device parsing for scan analytics |
 | RSpec | Automated testing |
+| Docker / Docker Compose | Local containerized environment |
 | Railway | Production deployment |
 
-## Local Setup
+## Run Locally with Docker (Recommended)
+
+This is the easiest way to run the full application — including the database — on your own machine, without installing Ruby, Rails, or PostgreSQL directly.
 
 ### Prerequisites
-- Ruby 3.3.4
+- Docker and Docker Compose installed
+
+### Steps
+
+```bash
+git clone https://github.com/ryanweitz22/qr_manager.git
+cd qr_manager
+./run.sh
+```
+
+You will be prompted:
+
+```
+Which Ruby version would you like to run locally?
+Type 3.3.4 or 4.0.2 and press Enter:
+```
+
+Type either `3.3.4` or `4.0.2` and press Enter. Docker will build and start the application using that exact Ruby version inside an isolated container, alongside its own PostgreSQL database.
+
+Once it says `Listening on http://0.0.0.0:3000`, open a second terminal and run the database setup (first run only):
+
+```bash
+docker compose exec web bin/rails db:create db:migrate db:seed
+```
+
+Then visit **http://localhost:3000** in your browser.
+
+Login with admin@example.com / password123
+
+### Important note about QR codes when running locally
+
+When run locally via Docker, any QR code you create will encode a `localhost:3000` URL. This works only on the machine it was generated on — `localhost` always refers to "this computer" and can never be scanned successfully by someone else's phone, anywhere else. This is true for all local development environments, not specific to this app. To get a QR code that works for anyone, anywhere, use the live Railway deployment above — that is the only version with a real public address.
+
+### Why two Ruby version options?
+
+The original specification required Ruby 4.0.2. I built and tested the application on Ruby 4.0.2 locally and confirmed it runs correctly, including inside Docker (Ruby 4.0.2 requires the `libyaml-dev` system package to build the `psych` gem's native extension — this is included in the Dockerfile). However, no free deployment platform currently supports Ruby 4.0.2, since it was only released in March 2026. For that reason, the live Railway deployment runs on Ruby 3.3.4. The Docker setup lets you choose either version to run and inspect locally, while the live link always reflects the actual production environment (3.3.4).
+
+## Run Locally Without Docker
+
+### Prerequisites
+- Ruby 3.3.4 (or 4.0.2 — see note below)
 - PostgreSQL
 - Node.js and Yarn
 
@@ -54,6 +105,16 @@ rails server
 Visit http://localhost:3000 — it redirects to the admin panel automatically.
 
 Login with admin@example.com / password123
+
+### Running on Ruby 4.0.2 without Docker
+
+```bash
+rbenv install 4.0.2
+rbenv local 4.0.2
+sed -i 's/ruby "3.3.4"/ruby "4.0.2"/' Gemfile
+bundle install
+rails server
+```
 
 ## Running Tests
 
@@ -78,18 +139,4 @@ Deployed on Railway with a linked PostgreSQL service. Auto-deploys on every push
 
 ## Assumptions and Notes
 
-The specification listed Ruby 4.0.2. I installed Ruby 4.0.2 locally using rbenv, updated the Gemfile, ran bundle install, and confirmed the application runs perfectly on Ruby 4.0.2 on my local machine. The only reason 3.3.4 is used in production is that Railway's build servers — in fact no free deployment platform — currently supports Ruby 4.0.2 as it was only released in March 2026. The Gemfile has been set to Ruby 3.3.4 purely for deployment compatibility. If you wish to run this application locally on Ruby 4.0.2, simply install Ruby 4.0.2 via rbenv and run bundle install — the application is fully compatible and works without any code changes.
-
-## Running Locally on Ruby 4.0.2
-
-This application was built on Ruby 4.0.2 as specified. It was changed to Ruby 3.3.4 purely for deployment compatibility as no free hosting platform currently supports Ruby 4.0.2. To run the application locally on Ruby 4.0.2, open your Ubuntu terminal, navigate to the project folder and run the following commands:
-
-```bash
-rbenv install 4.0.2
-rbenv local 4.0.2
-sed -i 's/ruby "3.3.4"/ruby "4.0.2"/' Gemfile
-bundle install
-rails server
-```
-
-Then visit http://localhost:3000 in your browser and log in with admin@example.com / password123
+The specification listed Ruby 4.0.2. I installed Ruby 4.0.2 locally using rbenv, updated the Gemfile, ran bundle install, and confirmed the application runs perfectly on Ruby 4.0.2 on my local machine, including inside a Docker container (after adding the `libyaml-dev` system dependency required by the `psych` gem on this Ruby version). The only reason 3.3.4 is used in production is that Railway's build servers — in fact no free deployment platform — currently supports Ruby 4.0.2, as it was only released in March 2026. The Gemfile and Dockerfile both default to Ruby 3.3.4 for deployment compatibility, but the application is fully tested and confirmed working on Ruby 4.0.2 as originally specified, both directly and inside Docker.

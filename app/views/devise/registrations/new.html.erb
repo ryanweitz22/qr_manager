@@ -1,0 +1,31 @@
+<h2 style="margin-bottom: 20px;">Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div style="margin-bottom: 16px;">
+    <%= f.label :email, style: "display:block; font-weight:600; margin-bottom:6px;" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", style: "width: 100%; max-width: 400px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size:15px;" %>
+  </div>
+
+  <div style="margin-bottom: 16px;">
+    <%= f.label :password, style: "display:block; font-weight:600; margin-bottom:6px;" %>
+    <% if @minimum_password_length %>
+      <small style="color: #666; display:block; margin-bottom:6px;">(<%= @minimum_password_length %> characters minimum)</small>
+    <% end %>
+    <%= f.password_field :password, autocomplete: "new-password", style: "width: 100%; max-width: 400px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size:15px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= f.label :password_confirmation, style: "display:block; font-weight:600; margin-bottom:6px;" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", style: "width: 100%; max-width: 400px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size:15px;" %>
+  </div>
+
+  <div>
+    <%= f.submit "Sign up", style: "background: #1976D2; color: white; padding: 10px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 15px;" %>
+  </div>
+<% end %>
+
+<div style="margin-top: 20px;">
+  <%= render "devise/shared/links" %>
+</div>
