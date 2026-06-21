@@ -42,7 +42,7 @@
         </td>
         <td style="text-align: center;"><strong><%= qr.qr_scans.count %></strong></td>
         <td><%= qr.created_at.strftime("%d %b %Y") %></td>
-        <td style="white-space: nowrap;">
+        <td>
           <%= link_to "View", admin_qr_code_path(qr), style: "display:inline-block; padding: 4px 10px; background:#1976D2; color:white; border-radius:4px; text-decoration:none; font-size:13px; margin:2px;" %>
           <%= link_to "Edit", edit_admin_qr_code_path(qr), style: "display:inline-block; padding: 4px 10px; background:#FF8C00; color:white; border-radius:4px; text-decoration:none; font-size:13px; margin:2px;" %>
           <%= button_to "Archive", archive_admin_qr_code_path(qr), method: :patch, data: { confirm: "Archive #{qr.name}? It will be hidden from the main list." }, style: "display:inline-block; padding: 4px 10px; background:#555; color:white; border-radius:4px; border:none; font-size:13px; cursor:pointer; margin:2px;" %>
