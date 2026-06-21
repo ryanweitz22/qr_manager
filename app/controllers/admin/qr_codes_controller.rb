@@ -14,7 +14,7 @@ class Admin::QrCodesController < Admin::BaseController
   end
 
   def show
-    @scans = @qr_code.qr_scans.order(scanned_at: :desc).limit(50)
+    @pagy, @scans = pagy(:offset, @qr_code.qr_scans.order(scanned_at: :desc), limit: 5)
     @scans_by_day = @qr_code.scans_by_day
   end
 

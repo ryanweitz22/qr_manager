@@ -122,7 +122,7 @@
   </div>
 
   <!-- Pagination — only shows if there are more than 20 scans -->
-  
+  <%== @pagy.series_nav if @scans.any? %>
 
 <% else %>
   <p style="color: #666;">
