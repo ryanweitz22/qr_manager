@@ -82,7 +82,25 @@ th { background: #f0f0f0; font-weight: 600; }
     padding: 14px !important;
   }
 }
-
+/* ===== LANDSCAPE PHONE — squeeze the QR codes table to try fit one screen ===== */
+@media (min-width: 601px) and (max-width: 930px) {
+  table.responsive-table {
+    font-size: 12px;
+  }
+  table.responsive-table th,
+  table.responsive-table td {
+    padding: 5px 6px !important;
+  }
+  table.responsive-table td[data-label="Actions"] a,
+  table.responsive-table td[data-label="Actions"] button {
+    padding: 3px 6px !important;
+    font-size: 11px !important;
+    margin: 1px !important;
+  }
+  table.responsive-table td[data-label="Slug"] code {
+    font-size: 10px !important;
+  }
+}
 /* ===== SMALL PHONE — up to 480px ===== */
 @media (max-width: 480px) {
   body { padding: 8px; font-size: 14px; }
