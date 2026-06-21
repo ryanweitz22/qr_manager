@@ -191,6 +191,20 @@ th { background: #f0f0f0; font-weight: 600; }
   }
 }
 
+
+
+/* ===== WORD WRAP for responsive-table cells on ALL screens — prevents desktop scrollbar from long URLs/slugs ===== */
+table.responsive-table td {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* ===== WORD WRAP for responsive-table cells on ALL screens — prevents desktop scrollbar from long URLs/slugs ===== */
+table.responsive-table td {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
 /* ===== DESKTOP LABEL COLUMN — Details table on show page ONLY (not index/archived) ===== */
 table.key-value-table td {
   display: flex;
