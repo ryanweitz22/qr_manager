@@ -19,7 +19,7 @@
   <% end %>
 </form>
 
-<table border="1" cellpadding="10" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+<table border="1" cellpadding="10" class="responsive-table" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
   <thead>
     <tr style="background: #f0f0f0; text-align: left;">
       <th>Name</th>
@@ -34,15 +34,15 @@
   <tbody>
     <% @qr_codes.each do |qr| %>
       <tr>
-        <td><strong><%= qr.name %></strong></td>
-        <td><code style="font-size: 12px;">/q/<%= qr.slug %></code></td>
-        <td><%= truncate(qr.destination_url, length: 40) %></td>
-        <td style="color: <%= qr.active? ? 'green' : 'red' %>; font-weight: bold;">
+        <td data-label="Name"><strong><%= qr.name %></strong></td>
+        <td data-label="Slug"><code style="font-size: 12px;">/q/<%= qr.slug %></code></td>
+        <td data-label="Destination URL"><%= truncate(qr.destination_url, length: 40) %></td>
+        <td data-label="Active?" style="color: <%= qr.active? ? 'green' : 'red' %>; font-weight: bold;">
           <%= qr.active? ? "✅ Yes" : "❌ No" %>
         </td>
-        <td style="text-align: center;"><strong><%= qr.qr_scans.count %></strong></td>
-        <td><%= qr.created_at.strftime("%d %b %Y") %></td>
-        <td>
+        <td data-label="Total Scans"><strong><%= qr.qr_scans.count %></strong></td>
+        <td data-label="Created"><%= qr.created_at.strftime("%d %b %Y") %></td>
+        <td data-label="Actions">
           <%= link_to "View", admin_qr_code_path(qr), style: "display:inline-block; padding: 4px 10px; background:#1976D2; color:white; border-radius:4px; text-decoration:none; font-size:13px; margin:2px;" %>
           <%= link_to "Edit", edit_admin_qr_code_path(qr), style: "display:inline-block; padding: 4px 10px; background:#FF8C00; color:white; border-radius:4px; text-decoration:none; font-size:13px; margin:2px;" %>
           <%= button_to "Archive", archive_admin_qr_code_path(qr), method: :patch, data: { confirm: "Archive #{qr.name}? It will be hidden from the main list." }, style: "display:inline-block; padding: 4px 10px; background:#555; color:white; border-radius:4px; border:none; font-size:13px; cursor:pointer; margin:2px;" %>

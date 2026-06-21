@@ -117,3 +117,62 @@ th { background: #f0f0f0; font-weight: 600; }
     white-space: normal !important;
   }
 }
+
+/* ===== INDEX PAGE — too many columns for portrait, becomes a labeled card per QR code ===== */
+@media (max-width: 600px) and (orientation: portrait) {
+  table.responsive-table thead {
+    display: none;
+  }
+  table.responsive-table {
+    display: block;
+    width: 100%;
+    border: none;
+  }
+  table.responsive-table tbody {
+    display: block;
+  }
+  table.responsive-table tr {
+    display: block;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    padding: 10px;
+    background: white;
+  }
+  table.responsive-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    border: none;
+    border-bottom: 1px solid #eee;
+    padding: 8px 4px;
+    word-break: break-word;
+    max-width: 100%;
+  }
+  table.responsive-table td:last-child {
+    border-bottom: none;
+    flex-wrap: wrap;
+  }
+  table.responsive-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #555;
+    flex-shrink: 0;
+    min-width: 90px;
+  }
+}
+
+/* ===== 2-COLUMN KEY-VALUE TABLES (show page, archived page) — wrap long values, fit screen ===== */
+@media (max-width: 600px) {
+  table:not(.responsive-table) {
+    width: 100%;
+    table-layout: fixed;
+  }
+  table:not(.responsive-table) td,
+  table:not(.responsive-table) th {
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    white-space: normal !important;
+  }
+}
