@@ -159,7 +159,7 @@ th { background: #f0f0f0; font-weight: 600; }
     font-weight: 600;
     color: #555;
     flex-shrink: 0;
-    min-width: 80px; flex-shrink: 0;
+    flex-shrink: 0;
   }
 }
 
@@ -188,5 +188,15 @@ th { background: #f0f0f0; font-weight: 600; }
     overflow-wrap: break-word !important;
     white-space: normal !important;
     padding: 8px 6px !important;
+  }
+}
+
+/* Fix value column wrapping inside flex card layout */
+@media (max-width: 600px) and (orientation: portrait) {
+  table.responsive-table td {
+    flex-wrap: wrap;
+  }
+  table.responsive-table td::before {
+    width: auto;
   }
 }
