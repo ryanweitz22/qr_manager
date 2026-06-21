@@ -70,23 +70,25 @@
 <h2>Scans Per Day — Last 30 Days</h2>
 <% if @scans_by_day.any? %>
   <% max_scans = @scans_by_day.values.max %>
-  <table border="1" cellpadding="8" style="border-collapse: collapse;">
+  <div class="table-wrap">
+  <table border="1" cellpadding="8" class="responsive-table" style="border-collapse: collapse; width: 100%; table-layout: fixed;">
     <tr style="background: #f0f0f0;">
-      <th>Date</th>
-      <th>Scans</th>
-      <th>Bar Chart</th>
+      <th style="width: 30%;">Date</th>
+      <th style="width: 20%;">Scans</th>
+      <th style="width: 50%;">Bar Chart</th>
     </tr>
     <% @scans_by_day.each do |date, count| %>
       <tr>
-        <td><%= date %></td>
-        <td><strong><%= count %></strong></td>
-        <td>
+        <td data-label="Date"><%= date %></td>
+        <td data-label="Scans"><strong><%= count %></strong></td>
+        <td data-label="Bar Chart">
           <!-- Visual bar — width is proportional to the highest day's count -->
           <div style="background: #1976D2; height: 18px; width: <%= (count.to_f / max_scans * 300).to_i %>px; border-radius: 2px;"></div>
         </td>
       </tr>
     <% end %>
   </table>
+  </div>
 <% else %>
   <p style="color: #666;">No scans in the last 30 days yet.</p>
 <% end %>
@@ -96,22 +98,24 @@
 <!-- Recent Scans Table -->
 <h2>Scan History (<%= @qr_code.qr_scans.count %> total)</h2>
 <% if @scans.any? %>
-  <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+  <div class="table-wrap">
+  <table border="1" cellpadding="8" class="responsive-table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
     <tr style="background: #f0f0f0;">
-      <th>Date & Time</th>
-      <th>IP Address</th>
-      <th>Browser / Device</th>
-      <th>Referrer</th>
+      <th style="width: 25%;">Date & Time</th>
+      <th style="width: 20%;">IP Address</th>
+      <th style="width: 25%;">Browser / Device</th>
+      <th style="width: 30%;">Referrer</th>
     </tr>
     <% @scans.each do |scan| %>
       <tr>
-        <td><%= scan.scanned_at.strftime("%d %b %Y at %H:%M:%S") %></td>
-        <td><%= scan.ip_address %></td>
-        <td><%= scan.user_agent.to_s.include?("iPhone") || scan.user_agent.to_s.include?("iPad") ? "Mobile Safari — iOS" : scan.user_agent.to_s.include?("Android") ? "Chrome — Android" : scan.user_agent.to_s.match(/Chrome\/([\d]+)/) ? "Chrome #{$1}" : scan.user_agent.to_s.match(/Firefox\/([\d]+)/) ? "Firefox #{$1}" : "Unknown" %></td>
-        <td><%= scan.referrer.present? ? truncate(scan.referrer, length: 40) : "Direct visit" %></td>
+        <td data-label="Date & Time"><%= scan.scanned_at.strftime("%d %b %Y at %H:%M:%S") %></td>
+        <td data-label="IP Address"><%= scan.ip_address %></td>
+        <td data-label="Browser / Device"><%= scan.user_agent.to_s.include?("iPhone") || scan.user_agent.to_s.include?("iPad") ? "Mobile Safari — iOS" : scan.user_agent.to_s.include?("Android") ? "Chrome — Android" : scan.user_agent.to_s.match(/Chrome\/([\d]+)/) ? "Chrome #{$1}" : scan.user_agent.to_s.match(/Firefox\/([\d]+)/) ? "Firefox #{$1}" : "Unknown" %></td>
+        <td data-label="Referrer"><%= scan.referrer.present? ? truncate(scan.referrer, length: 40) : "Direct visit" %></td>
       </tr>
     <% end %>
   </table>
+  </div>
 
   <!-- Pagination — only shows if there are more than 20 scans -->
   
