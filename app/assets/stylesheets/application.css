@@ -35,6 +35,8 @@ code { font-size: 13px; word-break: break-all; }
 table {
   width: 100%;
   border-collapse: collapse;
+}
+table:not(.responsive-table) {
   min-width: 600px;
 }
 th, td {
@@ -126,22 +128,25 @@ th { background: #f0f0f0; font-weight: 600; }
   table.responsive-table {
     display: block;
     width: 100%;
-    border: none;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
   }
   table.responsive-table tbody {
     display: block;
   }
   table.responsive-table tr {
     display: block;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 16px;
-    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 4px;
     background: white;
+  }
+  table.responsive-table tbody tr:last-child {
+    border-bottom: none;
   }
   table.responsive-table td {
     display: flex;
-    
     align-items: flex-start;
     gap: 10px;
     border: none;
@@ -149,6 +154,12 @@ th { background: #f0f0f0; font-weight: 600; }
     padding: 8px 4px;
     word-break: break-word;
     max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  table.responsive-table td::before {
+    flex-shrink: 0;
+    width: auto;
+    max-width: 40%;
   }
   table.responsive-table td:last-child {
     border-bottom: none;
@@ -158,7 +169,6 @@ th { background: #f0f0f0; font-weight: 600; }
     content: attr(data-label);
     font-weight: 600;
     color: #555;
-    flex-shrink: 0;
     flex-shrink: 0;
   }
 }
