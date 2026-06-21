@@ -104,3 +104,16 @@ th { background: #f0f0f0; font-weight: 600; }
     max-width: 100% !important;
   }
 }
+
+/* Force all tables to fit screen width on mobile, wrap long content instead of overflowing */
+@media (max-width: 600px) {
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  table td, table th {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal !important;
+  }
+}
