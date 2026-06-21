@@ -4,12 +4,16 @@ class Rack::Attack
     req.ip
   end
 
-  # Throttle login attempts by IP - 5 attempts per 20 seconds
-  throttle("logins/ip", limit: 5, period: 20.seconds) do |req|
-    if req.path == "/admin_users/sign_in" && req.post?
-      req.ip
-    end
+  # Throttle login attempts by email - 5 attempts per 20 seconds
+# Keyed on email rather than IP alone, since some networks rotate
+# client IPs between requests (confirmed on this Railway deployment -
+# the same test run alternated between two different source IPs,
+# which silently defeated an IP-only throttle).
+throttle("logins/email", limit: 5, period: 20.seconds) do |req|
+  if req.path == "/admin_users/sign_in" && req.post?
+    req.params.dig("admin_user", "email").to_s.downcase.presence
   end
+end
 
   # Throttle public QR redirect hits by IP - 60 per minute (allows real scanning, blocks scripted abuse)
   throttle("qr_redirect/ip", limit: 60, period: 1.minute) do |req|
