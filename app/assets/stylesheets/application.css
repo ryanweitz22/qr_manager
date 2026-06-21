@@ -42,7 +42,9 @@ table:not(.responsive-table) {
 th, td {
   padding: 10px 12px;
   text-align: left;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 th { background: #f0f0f0; font-weight: 600; }
 
@@ -189,14 +191,6 @@ th { background: #f0f0f0; font-weight: 600; }
     color: #555;
     flex-shrink: 0;
   }
-}
-
-
-
-/* ===== WORD WRAP for responsive-table cells on ALL screens — prevents desktop scrollbar from long URLs/slugs ===== */
-table.responsive-table td {
-  word-break: break-word;
-  overflow-wrap: anywhere;
 }
 
 /* ===== WORD WRAP for responsive-table cells on ALL screens — prevents desktop scrollbar from long URLs/slugs ===== */
