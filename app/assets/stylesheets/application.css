@@ -173,13 +173,13 @@ th { background: #f0f0f0; font-weight: 600; }
   }
 }
 
-/* ===== DESKTOP LABEL COLUMN for responsive-table (Details table on show page) ===== */
-table.responsive-table td {
+/* ===== DESKTOP LABEL COLUMN — Details table on show page ONLY (not index/archived) ===== */
+table.key-value-table td {
   display: flex;
   align-items: flex-start;
   gap: 10px;
 }
-table.responsive-table td::before {
+table.key-value-table td::before {
   content: attr(data-label);
   font-weight: 600;
   color: #555;
