@@ -163,6 +163,20 @@ th { background: #f0f0f0; font-weight: 600; }
   }
 }
 
+/* ===== DESKTOP LABEL COLUMN for responsive-table (Details table on show page) ===== */
+table.responsive-table td {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+table.responsive-table td::before {
+  content: attr(data-label);
+  font-weight: 600;
+  color: #555;
+  flex-shrink: 0;
+  width: 160px;
+}
+
 /* ===== 2-COLUMN KEY-VALUE TABLES (show page, archived page) — wrap long values, fit screen ===== */
 @media (max-width: 600px) {
   table:not(.responsive-table) {
