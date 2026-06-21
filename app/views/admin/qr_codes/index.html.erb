@@ -1,11 +1,10 @@
 <h1>QR Codes</h1>
 
-<p>
+<p class="content-actions" style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
   <%= link_to "➕ Create New QR Code", new_admin_qr_code_path,
-      style: "background: #1976D2; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;" %>
-  &nbsp;
+      style: "display:inline-block; background: #1976D2; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;" %>
   <%= link_to "🗄 View Archived QR Codes", archived_admin_qr_codes_path,
-      style: "background: #666; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;" %>
+      style: "display:inline-block; background: #666; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;" %>
 </p>
 
 <form method="get" action="/admin/qr_codes" style="margin: 15px 0;">
