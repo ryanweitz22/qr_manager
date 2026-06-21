@@ -141,7 +141,7 @@ th { background: #f0f0f0; font-weight: 600; }
   }
   table.responsive-table td {
     display: flex;
-    justify-content: space-between;
+    
     align-items: flex-start;
     gap: 10px;
     border: none;
@@ -159,7 +159,7 @@ th { background: #f0f0f0; font-weight: 600; }
     font-weight: 600;
     color: #555;
     flex-shrink: 0;
-    min-width: 90px;
+    min-width: 80px; flex-shrink: 0;
   }
 }
 
@@ -174,5 +174,19 @@ th { background: #f0f0f0; font-weight: 600; }
     word-break: break-all;
     overflow-wrap: anywhere;
     white-space: normal !important;
+  }
+}
+
+/* ===== KEY-VALUE TABLES (show/archived) — simple width fix, no flex needed ===== */
+@media (max-width: 600px) {
+  table:not(.responsive-table) {
+    width: 100% !important;
+    table-layout: fixed !important;
+  }
+  table:not(.responsive-table) td {
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    padding: 8px 6px !important;
   }
 }

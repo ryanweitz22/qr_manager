@@ -11,32 +11,30 @@
 
 <!-- QR Code Details -->
 <h2>Details</h2>
-<table border="1" cellpadding="10" style="border-collapse: collapse;">
+<table border="1" cellpadding="10" class="responsive-table" style="border-collapse: collapse;">
   <tr>
-    <td><strong>Name</strong></td>
-    <td><%= @qr_code.name %></td>
+    <td data-label="Name"><strong>Name</strong></td>
+    <td data-label="Name"><%= @qr_code.name %></td>
   </tr>
   <tr>
-    <td><strong>Slug</strong></td>
-    <td><code><%= @qr_code.slug %></code></td>
+    <td data-label="Slug"><strong>Slug</strong></td>
+    <td data-label="Slug"><code><%= @qr_code.slug %></code></td>
   </tr>
   <tr>
-    <td><strong>Destination URL</strong></td>
-    <td><%= link_to @qr_code.destination_url, @qr_code.destination_url, target: "_blank" %></td>
+    <td data-label="Destination URL"><strong>Destination URL</strong></td>
+    <td data-label="Destination URL"><%= link_to @qr_code.destination_url, @qr_code.destination_url, target: "_blank" %></td>
   </tr>
   <tr>
-    <td><strong>Status</strong></td>
-    <td style="color: <%= @qr_code.active? ? 'green' : 'red' %>; font-weight: bold;">
+    <td data-label="Status"><strong>Status</strong></td>
+    <td data-label="Status" style="color: <%= @qr_code.active? ? 'green' : 'red' %>; font-weight: bold;">
       <%= @qr_code.active? ? "✅ Active" : "❌ Inactive" %>
     </td>
   </tr>
   <tr>
-    <td><strong>Public QR URL</strong></td>
-    <td>
-      <!-- This is the URL encoded into the QR code image -->
+    <td data-label="Public QR URL"><strong>Public QR URL</strong></td>
+    <td data-label="Public QR URL">
       <code id="public-url"><%= qr_redirect_url(@qr_code.slug) %></code>
       &nbsp;
-      <!-- Copy button uses JavaScript to copy the URL to the clipboard -->
       <button onclick="navigator.clipboard.writeText(document.getElementById('public-url').innerText); this.innerText='✅ Copied!';"
               style="padding: 4px 10px; cursor: pointer;">
         📋 Copy URL
@@ -44,12 +42,12 @@
     </td>
   </tr>
   <tr>
-    <td><strong>Total Scans</strong></td>
-    <td><strong style="font-size: 20px;"><%= @qr_code.qr_scans.count %></strong></td>
+    <td data-label="Total Scans"><strong>Total Scans</strong></td>
+    <td data-label="Total Scans"><strong style="font-size: 20px;"><%= @qr_code.qr_scans.count %></strong></td>
   </tr>
   <tr>
-    <td><strong>Created</strong></td>
-    <td><%= @qr_code.created_at.strftime("%d %b %Y at %H:%M") %></td>
+    <td data-label="Created"><strong>Created</strong></td>
+    <td data-label="Created"><%= @qr_code.created_at.strftime("%d %b %Y at %H:%M") %></td>
   </tr>
 </table>
 
