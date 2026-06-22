@@ -64,8 +64,8 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-    user_name: Rails.application.credentials.gmail_username,
-    password: Rails.application.credentials.gmail_app_password,
+    user_name: ENV["GMAIL_USERNAME"],
+    password: ENV["GMAIL_APP_PASSWORD"],
     address: "smtp.gmail.com",
     port: 587,
     authentication: :plain,
