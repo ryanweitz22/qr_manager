@@ -6,7 +6,8 @@ A web application that lets you create and manage dynamic QR codes. Unlike stati
 
 **URL:** https://qrmanager-production.up.railway.app
 
-**Admin Login:**
+## *Admin Login:** ##
+
 - Email: admin@example.com
 - Password: password123
 
@@ -28,6 +29,7 @@ The live URL above will always work for anyone, on any device, anywhere in the w
 - Basic scan analytics by day (bar chart on detail page)
 - Mobile responsive UI — system-ui font, consistent button styling, fully tested and working on phone portrait, phone landscape, and desktop
 - Rate limiting — protects the admin login from brute-force attempts and the public QR redirect links from scripted abuse
+- Forgot password / email-based password reset — sends a real reset link to the admin's actual registered email via Resend, so only someone with access to that real inbox can ever reset the account password
 - Dockerized — runs locally with either Ruby 3.3.4 or Ruby 4.0.2
 - 404 handling for invalid or inactive slugs
 
@@ -43,6 +45,7 @@ The live URL above will always work for anyone, on any device, anywhere in the w
 | useragent | Browser/device parsing for scan analytics |
 | pagy | Pagination for scan history |
 | rack-attack | Rate limiting / throttling |
+| Resend | Transactional email delivery for password reset links |
 | RSpec | Automated testing |
 | Docker / Docker Compose | Local containerized environment |
 | Railway | Production deployment |
@@ -137,6 +140,23 @@ bundle exec rspec --format documentation
 5. Admin can change the destination at any time
 6. Same printed QR code, new destination — no reprinting needed
 
+## Forgot Password / Email Reset
+
+The admin login includes a standard Devise "forgot password" flow. Entering a
+registered email sends a real reset link via Resend (a transactional email
+API) to that email address. Only someone with access to the actual registered
+inbox can ever complete the reset, since the link is only ever delivered
+there — the admin password itself is also stored encrypted in the database,
+so it's never visible to anyone, including the app owner.
+
+Email delivery for this app specifically goes through Resend's API rather
+than direct SMTP (e.g. Gmail's mail servers), because Railway's hosting
+network does not allow outbound SMTP connections at all, on any port — this
+was confirmed directly by testing real send attempts on both port 587 and
+465 and getting a connection timeout both times, regardless of how the
+mailer was configured. Resend sends mail over a normal HTTPS request instead
+of SMTP, which isn't blocked the same way.
+
 ## Rate Limiting
 
 The app uses the `rack-attack` gem to throttle three categories of traffic:
@@ -157,7 +177,19 @@ Requests that exceed a limit receive an HTTP 429 response.
 
 ## Deployment
 
-Deployed on Railway with a linked PostgreSQL service. Auto-deploys on every push to the main branch.
+Deployed on Railway with a linked PostgreSQL service. Auto-deploys on every
+push to the main branch.
+
+The project was originally running on Railway's free trial. The trial fully
+expired partway through this project and paused all deployments, taking the
+live link down independently of any application code. I upgraded to Railway's
+paid Hobby plan to keep the live submission link working and stable going
+forward. This is a small recurring cost on my end, so depending on timing
+relative to this submission being reviewed, the subscription may be
+cancelled before its next billing cycle — if the live link is ever down for
+that reason rather than an application issue, the full codebase, README, and
+local/Docker setup instructions above are all still complete and runnable
+independently of Railway specifically.
 
 ## Assumptions and Notes
 
