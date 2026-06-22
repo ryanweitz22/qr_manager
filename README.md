@@ -10,7 +10,7 @@ A web application that lets you create and manage dynamic QR codes. Unlike stati
 - Email: admin@example.com
 - Password: password123
 
-**Test a redirect:** https://qrmanager-production.up.railway.app/q/sample-qr
+**Test a redirect/qr_code:** https://qrmanager-production.up.railway.app/q/FIRST_SAMPLE_QR_LINKED_TO_MY_GIT_PROFILE
 
 The live URL above will always work for anyone, on any device, anywhere in the world — no setup required. This is the version to use if you simply want to see and use the working application.
 
@@ -85,10 +85,6 @@ Login with admin@example.com / password123
 
 When run locally via Docker, any QR code you create will encode a `localhost:3000` URL. This works only on the machine it was generated on — `localhost` always refers to "this computer" and can never be scanned successfully by someone else's phone, anywhere else. This is true for all local development environments, not specific to this app. To get a QR code that works for anyone, anywhere, use the live Railway deployment above — that is the only version with a real public address.
 
-### Why two Ruby version options?
-
-The original specification required Ruby 4.0.2. I built and tested the application on Ruby 4.0.2 locally and confirmed it runs correctly, including inside Docker (Ruby 4.0.2 requires the `libyaml-dev` system package to build the `psych` gem's native extension — this is included in the Dockerfile). However, no free deployment platform currently supports Ruby 4.0.2, since it was only released in March 2026. For that reason, the live Railway deployment runs on Ruby 3.3.4. The Docker setup lets you choose either version to run and inspect locally, while the live link always reflects the actual production environment (3.3.4).
-
 ## Run Locally Without Docker
 
 ### Prerequisites
@@ -120,13 +116,17 @@ bundle install
 rails server
 ```
 
+### Why two Ruby version options?
+
+The original specification required Ruby 4.0.2. I built and tested the application on Ruby 4.0.2 locally and confirmed it runs correctly, including inside Docker (Ruby 4.0.2 requires the `libyaml-dev` system package to build the `psych` gem's native extension — this is included in the Dockerfile). However, no free deployment platform currently supports Ruby 4.0.2, since it was only released in March 2026. For that reason, the live Railway deployment runs on Ruby 3.3.4. The Docker setup lets you choose either version to run and inspect locally, while the live link always reflects the actual production environment (3.3.4).
+
 ## Running Tests
 
 ```bash
 bundle exec rspec --format documentation
 ```
 
-21 examples, 0 failures.
+21 examples, 0 failures, 1 pending.
 
 ## How Dynamic QR Codes Work
 
@@ -164,3 +164,6 @@ Deployed on Railway with a linked PostgreSQL service. Auto-deploys on every push
 The specification listed Ruby 4.0.2. I installed Ruby 4.0.2 locally using rbenv, updated the Gemfile, ran bundle install, and confirmed the application runs perfectly on Ruby 4.0.2 on my local machine, including inside a Docker container (after adding the `libyaml-dev` system dependency required by the `psych` gem on this Ruby version). The only reason 3.3.4 is used in production is that Railway's build servers — in fact no free deployment platform — currently supports Ruby 4.0.2, as it was only released in March 2026. The Gemfile and Dockerfile both default to Ruby 3.3.4 for deployment compatibility, but the application is fully tested and confirmed working on Ruby 4.0.2 as originally specified, both directly and inside Docker.
 
 Mobile responsiveness was tested on a real iPhone 14 Plus in both portrait and landscape orientation, and on a full desktop browser window. Tablet behaviour has not been physically tested (no tablet device was available), but both tablet portrait and landscape widths fall above the 600px breakpoint used throughout the CSS, so tablets should receive the same desktop-style layout already confirmed working from phone-landscape width upward — this is a reasoned inference based on the CSS, not a confirmed test.
+
+## RECOMMENDED:
+Please Open the Word version of the Documentation_QR_Manager in word then view in web Layout for efficiency/time saving, easy scroll through and better feel, however PDF Will be attached for portrait viewing.
