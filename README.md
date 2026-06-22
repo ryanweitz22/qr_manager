@@ -6,14 +6,22 @@ A web application that lets you create and manage dynamic QR codes. Unlike stati
 
 **URL:** https://qrmanager-production.up.railway.app
 
-## *Admin Login:** ##
+**Admin Login:**
 
 - Email: admin@example.com
 - Password: password123
 
 **Test a redirect/qr_code:** https://qrmanager-production.up.railway.app/q/FIRST_SAMPLE_QR_LINKED_TO_MY_GIT_PROFILE
 
-The live URL above will always work for anyone, on any device, anywhere in the world — no setup required. This is the version to use if you simply want to see and use the working application.
+The live URL above will always work for anyone, on any device, anywhere in the world — no setup required. This is the version to use if you simply want to see and use the working live application.
+
+## Source Code ##
+
+The full project, including the complete commit history, is available on GitHub:
+
+**https://github.com/ryanweitz22/qr_manager**
+
+You can browse, clone, or download the entire codebase directly from there — no zip file required, as i am blocked from sending the source file over Gmail due to security reasons.
 
 ## Features
 
